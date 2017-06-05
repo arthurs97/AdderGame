@@ -1,0 +1,153 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adding 2 Numbers | Happy Learning!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  </head>
+<body onload="playGame()">
+	<!-- 
+Join the 'Happy Learning' Team in slack, where we will discuss 
+everything about technology and you can also get help from the peers!
+
+https://happy-learning.herokuapp.com/ 
+-->
+<a href="https://happy-learning.herokuapp.com/ " target="_blank"><img alt="Join Slack" height="40" width="139" src="http://i.imgur.com/0Lne5Vr.png"/></a>
+<div>
+	<h1>Adding Game</h1>
+
+	<p id="demo">In this lecture, we will cover the game to add 2 numbers.</p>
+</div>
+<hr>
+
+<div class="quiz">
+	<div class="quiz-content">
+		<div class="question">
+			<p align="right" id="current">Current streak: 0</p>
+			<p align="right" id="max">Best streak: 0</p>
+		
+			What is the sum of <span class="text-info">5</span> and <span class="text-info">5</span>?
+		</div>
+		<div class="options">
+			<div class="fields">
+				<div class="field-block" id="option1" onclick="checkAnswer(this)">
+				10
+				</div>
+			</div>
+			<div class="fields">
+				<div class="field-block" id="option2" onclick="checkAnswer(this)">
+				10
+				</div>
+			</div>
+			<div class="fields">
+				<div class="field-block" id="option3" onclick="checkAnswer(this)">
+				10
+				</div>
+			</div>
+			<div class="fields">
+				<div class="field-block" id="option4" onclick="checkAnswer(this)">
+				10
+				</div>
+			</div>
+		</div>
+
+		<div id="after" class="after hide">
+		</div>
+
+		<div class="play-again">
+		<a class="button" onclick="playAgain()">Play again</a>
+		</div>
+	</div>
+</div>
+
+<script>
+var riddle = {};
+var currentStreak = 0;
+var maxStreak = 0;
+
+function randomNum() {
+	var rand = Math.floor(Math.random() * 51);
+	return rand;
+}
+
+function playAgain() {
+	var after = document.getElementById("after");
+	after.classList.remove("wrong");
+	after.classList.remove("correct");
+	after.classList.add("hide");
+
+	playGame();
+}
+
+function playGame() {
+	generateRiddle();
+
+	document.getElementById("option1").innerHTML = riddle.nums[0];
+	document.getElementById("option2").innerHTML = riddle.nums[1];
+	document.getElementById("option3").innerHTML = riddle.nums[2];
+	document.getElementById("option4").innerHTML = riddle.nums[3];
+
+	var summands = document.getElementsByClassName("text-info");
+	summands[0].innerHTML = riddle.field1;
+	summands[1].innerHTML = riddle.field2;
+	console.log("f1: " + riddle.field1);
+	console.log("f2: " + riddle.field2);
+}
+
+function checkAnswer(answerChoice) {
+	var result = document.getElementById("after");
+
+	if (answerChoice.innerHTML == riddle.answer) {
+		console.log("correct");
+		result.classList.remove('hide');
+		result.classList.add('correct');
+		result.innerHTML = "That's correct! Hit the button to play again.";
+
+		++currentStreak;
+		if (currentStreak > maxStreak) {
+			maxStreak = currentStreak;
+		}
+	} else {
+		console.log("incorrect");
+		result.classList.remove('hide');
+		result.classList.add('wrong');
+		result.innerHTML = "That's incorrect! Hit the button to play again.";
+
+		currentStreak = 0;
+	}
+
+	document.getElementById("current").innerHTML = "Current streak: "+ currentStreak;
+	document.getElementById("max").innerHTML = "Best streak: " + maxStreak;
+}
+
+function generateRiddle() {
+	var f1 = randomNum();
+	var f2 = randomNum();
+	var arr = [];
+
+	//place sum randomly in array
+	var sum = f1 + f2;
+	var idx = Math.floor(Math.random() * 4);
+	for (var i = 0; i < 4; ++i) {
+		if (i === idx) {
+			arr[i] = sum;
+		} else {
+			do {
+				arr[i] = randomNum() + randomNum();
+			} while(arr[i] === sum);
+		}
+	}
+
+	riddle = {
+		field1: f1,
+		field2: f2,
+		nums: arr,
+		answer: sum
+	}
+}
+	
+</script>
+
+</body>
+</html>
