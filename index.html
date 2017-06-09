@@ -30,7 +30,7 @@ https://happy-learning.herokuapp.com/
 			What is the sum of <span class="text-info">5</span> and <span class="text-info">5</span>?
 		</div>
 		<div class="options">
-			<div class="fields">
+			<div class="fields animated zoomIn">
 				<div class="field-block" id="option1" onclick="checkAnswer(this)">
 				10
 				</div>
@@ -102,6 +102,8 @@ function checkAnswer(answerChoice) {
 		console.log("correct");
 		result.classList.remove('hide');
 		result.classList.add('correct');
+		result.classList.add('animated');
+		result.classList.add('zoomInDown');
 		result.innerHTML = "That's correct! Hit the button to play again.";
 
 		++currentStreak;
@@ -112,6 +114,8 @@ function checkAnswer(answerChoice) {
 		console.log("incorrect");
 		result.classList.remove('hide');
 		result.classList.add('wrong');
+		result.classList.add('animated');
+		result.classList.add('zoomInDown');
 		result.innerHTML = "That's incorrect! Hit the button to play again.";
 
 		currentStreak = 0;
@@ -129,7 +133,7 @@ function generateRiddle() {
 	//place sum randomly in array
 	var sum = f1 + f2;
 	var idx = Math.floor(Math.random() * 4);
-	for (var i = 0; i < 4; ++i) {
+	for (let i = 0; i < 4; ++i) {
 		if (i === idx) {
 			arr[i] = sum;
 		} else {
